@@ -1,4 +1,3 @@
-# land-security
 # Secure Land Rights, Gender, and Agricultural Technical Efficiency in Côte d'Ivoire
 
 Replication material for the paper: *Secure Land Rights, Gender, and Agricultural Technical Efficiency in Côte d'Ivoire: A Combined Oaxaca-Blinder, Instrumental Variables, and Stochastic Frontier Approach*.
