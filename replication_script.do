@@ -150,7 +150,15 @@ esttab Hommes Femmes Test, cells("mean(pattern(1 1 0)) b(pattern(0 0 1) star)") 
     star(* 0.10 ** 0.05 *** 0.01)
 
 
-*** 2.2. TABLE 3 (Column 1): INSTRUMENTAL VARIABLES APPROACH (IV-2SLS)
+*** 2.2. TABLE 2: ROBUSTNESS CHECK — OAXACA-BLINDER DECOMPOSITION
+* Baseline weight(1) applies male coefficients as reference structure
+capture ssc install oaxaca
+oaxaca ln_rendement adopte_engrais adopte_semences ln_superficie age_gestionnaire ///
+    age_carre heduc hnation hhsize pcexp, by(femme_gestionnaire) weight(1) vce(robust)
+eststo model_oaxaca
+
+
+*** 2.3. TABLE 3 (Column 1): INSTRUMENTAL VARIABLES APPROACH (IV-2SLS)
 * Analysis sample restricted strictly to active and productive farms
 drop if rendement <= 0 | missing(rendement)
 
@@ -164,7 +172,7 @@ estat firststage   // Test of Instrument Strength (F-statistic)
 estat endogenous   // Durbin-Wu-Hausman Test for Land Rights Endogeneity
 
 
-*** 2.3. TABLE 3 (Column 2): STOCHASTIC FRONTIER ANALYSIS (SFA Model)
+*** 2.4. TABLE 3 (Column 2): STOCHASTIC FRONTIER ANALYSIS (SFA Model)
 * Structural parameters follow Battese & Coelli (1995) heteroscedastic formulation
 frontier ln_rendement adopte_engrais adopte_semences ln_superficie, ///
     uhet(femme_gestionnaire titre_securise age_gestionnaire heduc hhsize pcexp) vce(robust)
@@ -177,14 +185,6 @@ label var score_efficacite "Technical Efficiency Score [0-1]"
 
 * Two-sample t-test on predicted technical efficiency scores by gender
 ttest score_efficacite, by(femme_gestionnaire)
-
-
-*** 2.4. APPENDIX A: ROBUSTNESS CHECK — OAXACA-BLINDER DECOMPOSITION
-* Baseline weight(1) applies male coefficients as reference structure
-capture ssc install oaxaca
-oaxaca ln_rendement adopte_engrais adopte_semences ln_superficie age_gestionnaire ///
-    age_carre heduc hnation hhsize pcexp, by(femme_gestionnaire) weight(1) vce(robust)
-eststo model_oaxaca
 
 
 * ==============================================================================
